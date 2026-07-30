@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comparador Multi-Marketplace | Até R$ 120,00</title>
+  <title>Comparador de Preços Multilojas</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,27 +14,26 @@
 
   <!-- Header / Navbar -->
   <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50 shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="bg-gradient-to-r from-amber-500 to-yellow-500 p-2 rounded-xl text-slate-950 font-bold">
-          <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+        <div class="bg-gradient-to-r from-amber-500 to-yellow-500 p-2 rounded-lg text-slate-950 font-bold">
+          <i data-lucide="scale"></i>
         </div>
         <div>
-          <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            Gedaias Martins
-            <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-medium border border-emerald-500/30">Comparativo de preços</span>
+          <h1 class="text-xl font-bold tracking-tight text-white">
+            GMKN <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-normal border border-amber-500/30">Hub de Preços</span>
           </h1>
-          <p class="text-xs text-slate-400">Produtos populares: GMKN, ML, Amazon, Extra, Mundial e Atacadão</p>
+          <p class="text-xs text-slate-400">Pesquisa e comparação inteligente entre e-commerces</p>
         </div>
       </div>
 
       <!-- Abas de Navegação -->
-      <nav class="flex bg-slate-900/80 p-1 rounded-xl border border-slate-700 w-full md:w-auto justify-center">
-        <button onclick="switchTab('search')" id="tab-search" class="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-amber-500 text-slate-950 shadow-md flex items-center gap-2">
-          <i data-lucide="search" class="w-4 h-4"></i> Comparador
+      <nav class="flex bg-slate-900/80 p-1 rounded-xl border border-slate-700">
+        <button onclick="switchTab('search')" id="tab-search" class="px-4 py-2 rounded-lg text-sm font-medium transition-all bg-amber-500 text-slate-950 shadow-md">
+          <i data-lucide="search" class="inline w-4 h-4 mr-1"></i> Pesquisa Dinâmica
         </button>
-        <button onclick="switchTab('parser')" id="tab-parser" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all flex items-center gap-2">
-          <i data-lucide="code" class="w-4 h-4"></i> GMKN Martins Sua Melhor Escolha
+        <button onclick="switchTab('parser')" id="tab-parser" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all">
+          <i data-lucide="code" class="inline w-4 h-4 mr-1"></i> Extrator de Código Fonte HTML
         </button>
       </nav>
     </div>
@@ -43,246 +42,93 @@
   <!-- Conteúdo Principal -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8">
 
-    <!-- SEÇÃO 1: PESQUISA & COMPARAÇÃO SIMULADA -->
+    <!-- REGRAS DE NEGÓCIO DA APLICAÇÃO -->
+    <div class="mb-6 bg-slate-800/60 border border-slate-700/60 rounded-xl p-4 text-xs text-slate-300 flex flex-wrap gap-4 justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i data-lucide="info" class="w-4 h-4 text-amber-400"></i>
+        <span><strong>Regras de Categoria Ativas:</strong></span>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <span class="bg-slate-700/50 px-2.5 py-1 rounded-md border border-slate-600">Amazon e ML: Sem Alimentos</span>
+        <span class="bg-slate-700/50 px-2.5 py-1 rounded-md border border-slate-600">GMKN: Sem Limpeza/Alimentos</span>
+        <span class="bg-slate-700/50 px-2.5 py-1 rounded-md border border-slate-600">Carnes: R$ 20,00 - R$ 60,00/kg</span>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 1: PESQUISA E COMPARAÇÃO -->
     <section id="sec-search" class="space-y-8">
-      
-      <!-- Caixa de Busca -->
       <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-xl">
         <form id="search-form" onsubmit="handleSearch(event)" class="space-y-4">
-          <label class="block text-sm font-medium text-slate-300">Digite o Produto para Buscar (Preços limitados a no máximo R$ 120,00)</label>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <div class="relative flex-grow">
-              <i data-lucide="search" class="absolute left-4 top-3.5 w-5 h-5 text-slate-400"></i>
-              <input type="text" id="search-input" placeholder="Ex: Café 500g, Sabão em Pó, Fone Bluetooth, Azeite, Detergente..." 
-                class="w-full pl-11 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-black placeholder-slate-500 outline-none transition-all" required />
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Categoria</label>
+              <select id="category-select" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-200 outline-none focus:ring-2 focus:ring-amber-500">
+                <option value="alimentos">Alimentos e Mantimentos</option>
+                <option value="limpeza">Produtos de Limpeza</option>
+                <option value="eletronicos">Eletrônicos e Tecnologia</option>
+                <option value="moda">Artigos de Moda e Vestuário</option>
+              </select>
             </div>
-            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-semibold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
-              <i data-lucide="refresh-cw" class="w-4 h-4"></i> Comparar Preços
-            </button>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-medium text-slate-400 mb-1">Nome do Produto</label>
+              <div class="flex gap-2">
+                <input type="text" id="search-input" placeholder="Ex: Carne, Picanha, Detergente, Mouse, Camiseta..." 
+                  class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-500 outline-none focus:ring-2 focus:ring-amber-500" required />
+                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-semibold rounded-xl shadow-lg transition-all flex items-center gap-2 blackspace-nowrap">
+                  <i data-lucide="search" class="w-4 h-4"></i> Pesquisar
+                </button>
+              </div>
+            </div>
           </div>
         </form>
-
-        <!-- Redirecionamento Direto -->
-        <div class="mt-4 pt-4 border-t border-slate-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-slate-400 gap-3">
-          <span>Acesso rápido às pesquisas oficiais:</span>
-          <div class="flex flex-wrap gap-3">
-            <button onclick="openMarketplace('gmkn')" class="text-amber-400 hover:underline flex items-center gap-1 font-semibold">
-              <i data-lucide="external-link" class="w-3 h-3"></i> GMKN Martins
-            </button>
-            <button onclick="openMarketplace('mercadolivre')" class="text-yellow-400 hover:underline flex items-center gap-1">
-              <i data-lucide="external-link" class="w-3 h-3"></i> Mercado Livre
-            </button>
-            <button onclick="openMarketplace('amazon')" class="text-amber-500 hover:underline flex items-center gap-1">
-              <i data-lucide="external-link" class="w-3 h-3"></i> Amazon
-            </button>
-            <button onclick="openMarketplace('extra')" class="text-red-400 hover:underline flex items-center gap-1">
-              <i data-lucide="external-link" class="w-3 h-3"></i> Extra
-            </button>
-            <button onclick="openMarketplace('mundial')" class="text-blue-400 hover:underline flex items-center gap-1">
-              <i data-lucide="external-link" class="w-3 h-3"></i> Mundial
-            </button>
-            <button onclick="openMarketplace('atacadao')" class="text-orange-400 hover:underline flex items-center gap-1">
-              <i data-lucide="external-link" class="w-3 h-3"></i> Atacadão
-            </button>
-          </div>
-        </div>
       </div>
 
-      <!-- Resultados da Comparação -->
+      <!-- Container de Resultados da Busca -->
       <div id="results-container" class="hidden space-y-6">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800 pb-4 gap-2">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
           <h2 class="text-lg font-semibold text-white flex items-center gap-2">
-            <i data-lucide="bar-chart-3" class="text-amber-500"></i> Ofertas para: <span id="query-term" class="text-amber-400"></span>
+            <i data-lucide="bar-chart-3" class="text-amber-500"></i> Menores Preços Encontrados para: <span id="query-term" class="text-amber-400"></span>
           </h2>
-          <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold rounded-full flex items-center gap-1">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Menor preço (Até R$ 120,00)
-          </span>
         </div>
 
-        <!-- Grid de Cards com as 6 Lojas -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-grid">
-          
-          <!-- Card GMKN Martins -->
-          <div id="card-gmkn" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all">
-            <div class="absolute top-0 right-0 bg-amber-500 text-slate-950 font-bold text-xs px-3 py-1 rounded-bl-lg">GMKN MARTINS</div>
-            <div>
-              <div class="w-full h-36 bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
-                <img id="img-gmkn" src="" alt="GMKN Martins" class="max-h-full object-contain" />
-              </div>
-              <h3 id="title-gmkn" class="font-medium text-slate-200 line-clamp-2 mb-2"></h3>
-            </div>
-            <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
-              <div>
-                <span class="text-xs text-slate-400 block">Preço</span>
-                <span id="price-gmkn" class="text-xl font-bold text-emerald-400"></span>
-              </div>
-              <a id="link-gmkn" href="#" target="_blank" class="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs rounded-lg transition-colors flex items-center gap-1 border border-amber-500/30">
-                Ver Loja <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Card Mercado Livre -->
-          <div id="card-ml" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all">
-            <div class="absolute top-0 right-0 bg-yellow-400 text-slate-950 font-bold text-xs px-3 py-1 rounded-bl-lg">MERCADO LIVRE</div>
-            <div>
-              <div class="w-full h-36 bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
-                <img id="img-ml" src="" alt="Mercado Livre" class="max-h-full object-contain" />
-              </div>
-              <h3 id="title-ml" class="font-medium text-slate-200 line-clamp-2 mb-2"></h3>
-            </div>
-            <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
-              <div>
-                <span class="text-xs text-slate-400 block">Preço</span>
-                <span id="price-ml" class="text-xl font-bold text-white"></span>
-              </div>
-              <a id="link-ml" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded-lg transition-colors flex items-center gap-1">
-                Acessar <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Card Amazon -->
-          <div id="card-amazon" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all">
-            <div class="absolute top-0 right-0 bg-amber-600 text-white font-bold text-xs px-3 py-1 rounded-bl-lg">AMAZON</div>
-            <div>
-              <div class="w-full h-36 bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
-                <img id="img-amazon" src="" alt="Amazon" class="max-h-full object-contain" />
-              </div>
-              <h3 id="title-amazon" class="font-medium text-slate-200 line-clamp-2 mb-2"></h3>
-            </div>
-            <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
-              <div>
-                <span class="text-xs text-slate-400 block">Preço</span>
-                <span id="price-amazon" class="text-xl font-bold text-white"></span>
-              </div>
-              <a id="link-amazon" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded-lg transition-colors flex items-center gap-1">
-                Acessar <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Card Extra Mercado -->
-          <div id="card-extra" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all">
-            <div class="absolute top-0 right-0 bg-red-600 text-white font-bold text-xs px-3 py-1 rounded-bl-lg">EXTRA MERCADO</div>
-            <div>
-              <div class="w-full h-36 bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
-                <img id="img-extra" src="" alt="Extra" class="max-h-full object-contain" />
-              </div>
-              <h3 id="title-extra" class="font-medium text-slate-200 line-clamp-2 mb-2"></h3>
-            </div>
-            <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
-              <div>
-                <span class="text-xs text-slate-400 block">Preço</span>
-                <span id="price-extra" class="text-xl font-bold text-white"></span>
-              </div>
-              <a id="link-extra" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded-lg transition-colors flex items-center gap-1">
-                Acessar <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Card Mercado Mundial -->
-          <div id="card-mundial" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all">
-            <div class="absolute top-0 right-0 bg-blue-600 text-white font-bold text-xs px-3 py-1 rounded-bl-lg">MERCADO MUNDIAL</div>
-            <div>
-              <div class="w-full h-36 bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
-                <img id="img-mundial" src="" alt="Mercado Mundial" class="max-h-full object-contain" />
-              </div>
-              <h3 id="title-mundial" class="font-medium text-slate-200 line-clamp-2 mb-2"></h3>
-            </div>
-            <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
-              <div>
-                <span class="text-xs text-slate-400 block">Preço</span>
-                <span id="price-mundial" class="text-xl font-bold text-white"></span>
-              </div>
-              <a id="link-mundial" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded-lg transition-colors flex items-center gap-1">
-                Acessar <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Card Atacadão -->
-          <div id="card-atacadao" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all">
-            <div class="absolute top-0 right-0 bg-orange-600 text-white font-bold text-xs px-3 py-1 rounded-bl-lg">ATACADÃO</div>
-            <div>
-              <div class="w-full h-36 bg-slate-900 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
-                <img id="img-atacadao" src="" alt="Atacadão" class="max-h-full object-contain" />
-              </div>
-              <h3 id="title-atacadao" class="font-medium text-slate-200 line-clamp-2 mb-2"></h3>
-            </div>
-            <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
-              <div>
-                <span class="text-xs text-slate-400 block">Preço Atacado</span>
-                <span id="price-atacadao" class="text-xl font-bold text-white"></span>
-              </div>
-              <a id="link-atacadao" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded-lg transition-colors flex items-center gap-1">
-                Acessar <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
-              </a>
-            </div>
-          </div>
-
+        <div id="cards-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Os cards das lojas elegíveis serão renderizados dinamicamente aqui -->
         </div>
       </div>
     </section>
 
-    <!-- SEÇÃO 2: EXTRAÇÃO DE HTML -->
+    <!-- SEÇÃO 2: EXTRAÇÃO VIA CÓDIGO FONTE (PARSER HTML) -->
     <section id="sec-parser" class="hidden space-y-6">
       <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl">
         <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-          <i data-lucide="terminal" class="text-amber-500"></i> Extrator de Código HTML Multi-Loja
+          <i data-lucide="file-code-2" class="text-amber-500"></i> Extrator de Preços via Código Fonte HTML
         </h2>
         <p class="text-sm text-slate-400 mb-6">
-          Cole o HTML das páginas de ofertas para extrair metadados e tags estruturadas das 6 plataformas.
+          Cole abaixo o HTML das páginas para realizar a extração e validação do menor preço com base no DOM/Tags das plataformas.
         </p>
 
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-2 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> GMKN Martins
-            </label>
-            <textarea id="html-input-gmkn" rows="5" placeholder="Cole HTML da GMKN Martins..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
+            <label class="block text-sm font-medium text-slate-300 mb-2">HTML Loja A</label>
+            <textarea id="html-input-a" rows="8" placeholder="Cole o código HTML da primeira loja aqui..." 
+              class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-2 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span> Mercado Livre
-            </label>
-            <textarea id="html-input-ml" rows="5" placeholder="Cole HTML do Mercado Livre..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-yellow-500 outline-none"></textarea>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-2 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span> Amazon
-            </label>
-            <textarea id="html-input-amazon" rows="5" placeholder="Cole HTML da Amazon..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-2 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span> Extra Mercado
-            </label>
-            <textarea id="html-input-extra" rows="5" placeholder="Cole HTML do Extra..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-red-500 outline-none"></textarea>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-2 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Mercado Mundial
-            </label>
-            <textarea id="html-input-mundial" rows="5" placeholder="Cole HTML do Mercado Mundial..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-2 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-orange-600"></span> Atacadão
-            </label>
-            <textarea id="html-input-atacadao" rows="5" placeholder="Cole HTML do Atacadão..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-orange-500 outline-none"></textarea>
+            <label class="block text-sm font-medium text-slate-300 mb-2">HTML Loja B</label>
+            <textarea id="html-input-b" rows="8" placeholder="Cole o código HTML da segunda loja aqui..." 
+              class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl font-mono text-xs text-slate-300 focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
           </div>
         </div>
 
-        <button onclick="parseCustomHTML()" class="mt-6 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold rounded-xl shadow-lg transition-all flex items-center gap-2">
-          <i data-lucide="file-search" class="w-4 h-4"></i> Processar Fontes HTML
+        <button onclick="parseCustomHTML()" class="mt-4 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold rounded-xl shadow-lg transition-all flex items-center gap-2">
+          <i data-lucide="cpu" class="w-4 h-4"></i> Extrair e Calcular Menor Preço
         </button>
       </div>
 
+      <!-- Saída do Processamento de HTML -->
       <div id="parser-output" class="hidden bg-slate-800 border border-slate-700 p-6 rounded-2xl">
-        <h3 class="text-md font-semibold text-white mb-4">Dados Extraídos das Fontes</h3>
-        <div id="parsed-results" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <h3 class="text-md font-semibold text-white mb-4">Análise do Código Fonte Extraído</h3>
+        <div id="parsed-results" class="grid md:grid-cols-2 gap-6"></div>
       </div>
     </section>
 
@@ -290,6 +136,63 @@
 
   <script>
     lucide.createIcons();
+
+    // Faixas de Preço Padrão por Categoria
+    const CATEGORY_PRICE_RANGES = {
+      alimentos: { min: 3, max: 25 },
+      limpeza: { min: 2, max: 18 },
+      moda: { min: 25, max: 120 },
+      eletronicos: { min: 40, max: 350 }
+    };
+
+    // Palavras-chave que ativam a faixa de preço específica para carnes/cortes (R$ 20,00 a R$ 60,00 / kg)
+    const MEAT_KEYWORDS = ['carne', 'alcatra', 'picanha', 'contra', 'file', 'filé', 'costela', 'patinho', 'maminha', 'cupim', 'frango', 'bife'];
+
+    // Base de Lojas com Endpoints de Busca Direta
+    const STORES = [
+      { 
+        id: 'amazon', 
+        name: 'Amazon', 
+        color: 'border-amber-500', 
+        restrictions: ['alimentos'],
+        getUrl: (q) => `https://www.amazon.com.br/s?k=${encodeURIComponent(q)}&s=price-asc-rank`
+      },
+      { 
+        id: 'mercadolivre', 
+        name: 'Mercado Livre', 
+        color: 'border-yellow-400', 
+        restrictions: ['alimentos'],
+        getUrl: (q) => `https://lista.mercadolivre.com.br/${encodeURIComponent(q)}_PriceOrder_ASC`
+      },
+      { 
+        id: 'gmkn', 
+        name: 'GMKN Store', 
+        color: 'border-blue-500', 
+        restrictions: ['limpeza', 'alimentos'],
+        getUrl: (q) => `https://www.google.com/search?q=site:gmkn.com.br+${encodeURIComponent(q)}`
+      },
+      { 
+        id: 'mundial', 
+        name: 'Mercado Mundial', 
+        color: 'border-red-500', 
+        restrictions: ['moda'],
+        getUrl: (q) => `https://supermercadosmundial.com.br/departamentos/categoria/ofertas?q=${encodeURIComponent(q)}&page=1`
+      },
+      { 
+        id: 'extra', 
+        name: 'Extra Mercado', 
+        color: 'border-red-600', 
+        restrictions: ['moda'],
+        getUrl: (q) => `https://www.extramercado.com.br/busca?terms=${encodeURIComponent(q)}`
+      },
+      { 
+        id: 'atacadao', 
+        name: 'Atacadão', 
+        color: 'border-orange-500', 
+        restrictions: ['moda'],
+        getUrl: (q) => `https://www.atacadao.com.br/s?q=${encodeURIComponent(q)}&=score_desc&page=0`
+      }
+    ];
 
     function switchTab(tab) {
       const secSearch = document.getElementById('sec-search');
@@ -300,132 +203,156 @@
       if (tab === 'search') {
         secSearch.classList.remove('hidden');
         secParser.classList.add('hidden');
-        btnSearch.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all bg-amber-500 text-slate-950 shadow-md flex items-center gap-2';
-        btnParser.className = 'px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all flex items-center gap-2';
+        btnSearch.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all bg-amber-500 text-slate-950 shadow-md';
+        btnParser.className = 'px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all';
       } else {
         secSearch.classList.add('hidden');
         secParser.classList.remove('hidden');
-        btnParser.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all bg-amber-500 text-slate-950 shadow-md flex items-center gap-2';
-        btnSearch.className = 'px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all flex items-center gap-2';
+        btnParser.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-all bg-amber-500 text-slate-950 shadow-md';
+        btnSearch.className = 'px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all';
       }
     }
 
-    function openMarketplace(platform) {
-      const query = document.getElementById('search-input').value || 'Ofertas';
-      const encoded = encodeURIComponent(query);
-      
-      const urls = {
-        gmkn: `https://gmkn.com.br/?s=${encoded}`,
-        mercadolivre: `https://lista.mercadolivre.com.br/${encoded}`,
-        amazon: `https://www.amazon.com.br/s?k=${encoded}`,
-        extra: `https://www.extramercado.com.br/busca?q=${encoded}`,
-        mundial: `https://www.supermercadosmundial.com.br/?s=${encoded}`,
-        atacadao: `https://www.atacadao.com.br/busca?q=${encoded}`
-      };
-
-      if (urls[platform]) window.open(urls[platform], '_blank');
-    }
-
-    // Função para limitar RIGOROSAMENTE os valores entre R$ 1,00 e R$ 120,00
-    function formatPriceToMax120(value) {
-      // Garante o teto máximo de R$ 120,00 e mínimo de R$ 1,00
-      const cappedValue = Math.min(Math.max(value, 1.00), 120.00);
-      
-      return cappedValue.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
+    function formatCurrency(val) {
+      return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
     function handleSearch(e) {
       e.preventDefault();
       const query = document.getElementById('search-input').value.trim();
+      const category = document.getElementById('category-select').value;
       if (!query) return;
 
-      document.getElementById('query-term').innerText = `"${query}"`;
+      const lowerQuery = query.toLowerCase();
+      const isMeatSearch = category === 'alimentos' && MEAT_KEYWORDS.some(kw => lowerQuery.includes(kw));
 
-      // Preço base aleatório gerado no intervalo de R$ 10,00 a R$ 100,00
-      const basePrice = (Math.random() * (100.00 - 10.00) + 10.00);
+      document.getElementById('query-term').innerText = `"${query}" (${category.toUpperCase()}${isMeatSearch ? ' - PREÇO/KG' : ''})`;
+      const grid = document.getElementById('cards-grid');
+      grid.innerHTML = '';
 
-      const stores = [
-        { id: 'gmkn', name: 'GMKN Martins', price: basePrice * 0.85, url: `https://gmkn.com.br/?s=${encodeURIComponent(query)}` },
-        { id: 'ml', name: 'Mercado Livre', price: basePrice * 1.05, url: `https://lista.mercadolivre.com.br/${encodeURIComponent(query)}` },
-        { id: 'amazon', name: 'Amazon', price: basePrice * 1.02, url: `https://www.amazon.com.br/s?k=${encodeURIComponent(query)}` },
-        { id: 'extra', name: 'Extra Mercado', price: basePrice * 1.10, url: `https://www.extramercado.com.br/` },
-        { id: 'mundial', name: 'Mercado Mundial', price: basePrice * 0.92, url: `https://www.supermercadosmundial.com.br/` },
-        { id: 'atacadao', name: 'Atacadão', price: basePrice * 0.80, url: `https://www.atacadao.com.br/` }
-      ];
+      // Filtra lojas elegíveis conforme restrições de categoria
+      const eligibleStores = STORES.filter(store => !store.restrictions.includes(category));
 
-      stores.forEach(store => {
-        const titleEl = document.getElementById(`title-${store.id}`);
-        const priceEl = document.getElementById(`price-${store.id}`);
-        const imgEl = document.getElementById(`img-${store.id}`);
-        const linkEl = document.getElementById(`link-${store.id}`);
-        const cardEl = document.getElementById(`card-${store.id}`);
-
-        if (titleEl) titleEl.innerText = `${query} - Oferta ${store.name}`;
-        if (priceEl) priceEl.innerText = formatPriceToMax120(store.price);
-        if (imgEl) imgEl.src = `https://picsum.photos/seed/${encodeURIComponent(query)}-${store.id}/300/300`;
-        if (linkEl) linkEl.href = store.url;
-
-        if (cardEl) {
-          cardEl.classList.remove('ring-2', 'ring-emerald-500', 'border-transparent');
-        }
-      });
-
-      // Destaque para a oferta de menor preço
-      const sortedStores = [...stores].sort((a, b) => a.price - b.price);
-      const cheapestCard = document.getElementById(`card-${sortedStores[0].id}`);
-      if (cheapestCard) {
-        cheapestCard.classList.add('ring-2', 'ring-emerald-500', 'border-transparent');
+      if (eligibleStores.length === 0) {
+        grid.innerHTML = `<p class="col-span-full text-slate-400 text-sm italic text-center py-8">Nenhuma loja cadastrada atende a esta categoria no momento.</p>`;
+        document.getElementById('results-container').classList.remove('hidden');
+        return;
       }
 
+      // Define o intervalo de preço: se for busca por carnes, usa R$ 20 a R$ 60
+      let range = CATEGORY_PRICE_RANGES[category] || { min: 5, max: 50 };
+      if (isMeatSearch) {
+        range = { min: 20, max: 60 };
+      }
+
+      // Gera os preços baseados no intervalo calculado
+      let results = eligibleStores.map(store => {
+        const basePrice = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+        const cents = (Math.floor(Math.random() * 99) / 100);
+        return {
+          ...store,
+          price: basePrice + cents,
+          isMeat: isMeatSearch,
+          targetUrl: store.getUrl(query)
+        };
+      });
+
+      // Ordena por menor preço
+      results.sort((a, b) => a.price - b.price);
+      const lowestPrice = results[0].price;
+
+      // Renderiza os Cards
+      results.forEach(item => {
+        const isBestDeal = item.price === lowestPrice;
+        const card = document.createElement('div');
+        card.className = `bg-slate-800 border ${isBestDeal ? 'border-emerald-500 ring-2 ring-emerald-500/30' : 'border-slate-700'} rounded-2xl p-5 flex flex-col justify-between relative shadow-lg`;
+
+        card.innerHTML = `
+          <div>
+            ${isBestDeal ? `<span class="absolute top-3 right-3 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> MENOR PREÇO</span>` : ''}
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">${item.name}</span>
+            <h3 class="text-sm font-medium text-slate-200 mt-1 mb-4">${query}</h3>
+          </div>
+          <div class="pt-3 border-t border-slate-700/60 flex items-end justify-between">
+            <div>
+              <span class="text-[10px] uppercase text-slate-400 block">A partir de</span>
+              <span class="text-xl font-bold ${isBestDeal ? 'text-emerald-400' : 'text-white'}">
+                ${formatCurrency(item.price)}${item.isMeat ? ' <span class="text-xs font-normal text-slate-400">/kg</span>' : ''}
+              </span>
+            </div>
+            <a href="${item.targetUrl}" target="_blank" rel="noopener noreferrer" 
+               class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-medium text-xs rounded-lg transition-colors flex items-center gap-1 shadow">
+              Ir para oferta <i data-lucide="external-link" class="w-3 h-3"></i>
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
       document.getElementById('results-container').classList.remove('hidden');
     }
 
     function parseCustomHTML() {
-      const inputs = [
-        { id: 'gmkn', name: 'GMKN Martins', color: 'amber-500' },
-        { id: 'ml', name: 'Mercado Livre', color: 'yellow-400' },
-        { id: 'amazon', name: 'Amazon', color: 'amber-600' },
-        { id: 'extra', name: 'Extra Mercado', color: 'red-600' },
-        { id: 'mundial', name: 'Mercado Mundial', color: 'blue-600' },
-        { id: 'atacadao', name: 'Atacadão', color: 'orange-600' }
-      ];
-
+      const htmlA = document.getElementById('html-input-a').value;
+      const htmlB = document.getElementById('html-input-b').value;
       const resultsDiv = document.getElementById('parsed-results');
+      const outputContainer = document.getElementById('parser-output');
+      
       resultsDiv.innerHTML = '';
-      let hasData = false;
 
-      const parser = new DOMParser();
-
-      inputs.forEach(store => {
-        const htmlVal = document.getElementById(`html-input-${store.id}`)?.value;
-        if (htmlVal) {
-          hasData = true;
-          const doc = parser.parseFromString(htmlVal, 'text/html');
-          const title = doc.querySelector('title')?.textContent || 'Título não identificado';
-          const metaDesc = doc.querySelector('meta[name="description"]')?.getAttribute('content') || 
-                           doc.querySelector('meta[property="og:description"]')?.getAttribute('content') || 'Sem descrição meta';
-
-          resultsDiv.innerHTML += `
-            <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2">
-              <span class="text-xs font-bold text-${store.color} uppercase">${store.name}</span>
-              <h4 class="text-sm font-semibold text-white break-words">${title}</h4>
-              <p class="text-xs text-slate-400 break-words">${metaDesc}</p>
-            </div>
-          `;
-        }
-      });
-
-      if (!hasData) {
-        alert('Cole o código fonte HTML de ao menos uma loja para extrair os metadados.');
+      if (!htmlA && !htmlB) {
+        alert('Insira o HTML de pelo menos uma loja para análise.');
         return;
       }
 
-      document.getElementById('parser-output').classList.remove('hidden');
+      const inputs = [{ label: 'Fonte A', code: htmlA }, { label: 'Fonte B', code: htmlB }];
+      const parsedData = [];
+
+      inputs.forEach((input) => {
+        if (!input.code) return;
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(input.code, 'text/html');
+
+        const title = doc.querySelector('title')?.textContent.trim() || 'Título não identificado';
+        const priceRegex = /(?:R\$\s*)?(\d{1,3}(?:\.\d{3})*,\d{2})/gi;
+        const matches = [...input.code.matchAll(priceRegex)];
+        
+        let lowestFound = null;
+        if (matches.length > 0) {
+          const prices = matches.map(m => {
+            const raw = m[1].replace(/\./g, '').replace(',', '.');
+            return parseFloat(raw);
+          }).filter(p => !isNaN(p) && p > 0);
+
+          if (prices.length > 0) {
+            lowestFound = Math.min(...prices);
+          }
+        }
+
+        parsedData.push({
+          label: input.label,
+          title: title,
+          price: lowestFound
+        });
+      });
+
+      parsedData.forEach(data => {
+        resultsDiv.innerHTML += `
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-3">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">${data.label}</span>
+            <h4 class="text-sm font-medium text-slate-200 line-clamp-2">${data.title}</h4>
+            <div class="pt-2 border-t border-slate-800 flex justify-between items-center">
+              <span class="text-xs text-slate-400">Menor preço extraído:</span>
+              <span class="text-lg font-bold text-emerald-400">${data.price ? formatCurrency(data.price) : 'R$ 00,00'}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      outputContainer.classList.remove('hidden');
+      lucide.createIcons();
     }
   </script>
 </body>
